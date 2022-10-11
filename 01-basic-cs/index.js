@@ -1,5 +1,6 @@
 'use strict'
 
+const _ = require('lodash') // https://lodash.com/docs/4.17.4
 const assert = require('assert')
 
 const database = require('./database.json')
@@ -14,24 +15,16 @@ const groupHats = (searchHatId) => {
     return acc
   }, {})
 }
-const findTopHatsSold = ({ hats = {}, top = 3 }) => {
-  return Object.fromEntries(
-    Object.entries(hats)
-      .sort(([, a], [, b]) => b - a).slice(0, top))
-}
-
-const sumTotalHats = (hats = {}) => {
+const findTotalHatsSold = ({ hats = {}, top = 3 }) => {
   let total = 0
-  Object.values(hats).forEach(totalSold => {
-    total += totalSold
+  _.orderBy(hats).reverse().slice(0, top).forEach(totalHat => {
+    total += totalHat
   })
-
   return total
 }
 
 const hats = groupHats()
-const topHats = findTopHatsSold({ hats, top: 3 })
-const total = sumTotalHats(topHats)
+const total = findTotalHatsSold({ hats, top: 3 })
 
 // Throws error on failure
 assert.equal(total, 23, `Invalid result: ${total} != 23`)
