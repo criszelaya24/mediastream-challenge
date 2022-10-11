@@ -12,6 +12,4 @@ app.all('*', (req, res) => {
   res.status(404).send({ info: 'Endpoint not found' })
 })
 
-// TODO: everything else
-
 module.exports = app
