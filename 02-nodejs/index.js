@@ -1,12 +1,4 @@
-'use strict'
+const port = process.env.PORT || 3000
+const app = require('./app')
 
-const express = require('express')
-
-const User = require('./models/User')
-
-// Setup Express.js app
-const app = express()
-
-// TODO: everything else
-
-app.listen(3000)
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
